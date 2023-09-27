@@ -18,6 +18,8 @@ app.get('/resetALL', (req,res) => {
 app.get('/*', (req,res) => {
     if (req.url == '/') {
         requestPath = '/index';
+    } else if (req.url == '/favicon.ico') {
+        res.sendStatus(404);
     } else {
         requestPath = req.url;
     }
