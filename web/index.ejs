@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>OpenWMS</title>
-        <link rel="stylesheet" href="./style.css">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://kit.fontawesome.com/26225932ca.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -42,6 +41,7 @@
             .navbar-buttons:hover {
                 color: white;
                 background-color: #1e40af;
+                transition: ease-in-out 0.1s;
             }
 
             .navbar {
@@ -64,17 +64,19 @@
                 <a id="wards" class="<% if (selected == 'wards') {%>navbar-button-selected<%}%> navbar-buttons" href="./wards"><i class="fa-solid fa-bed"></i> Wards</a>
                 <a id="patients" class="navbar-buttons" href="./ward"><i class="fa-solid fa-bed"></i> Patients</a>
                 <a class="float-right hover:text-white hover:bg-blue-800 px-2 rounded-md" href="#" onclick="toggleFlyout()">Dr FAULKNER, J <i class="fa-solid fa-user px-1"></i></a>
+                <a id="notifications" class="float-right hover:text-white hover:bg-blue-800 rounded-md mr-3" href="#"><i class="fa-solid fa-bell"></i></a>
             </div>
         </nav>
         <div id="profileFlyout" class="flyout hidden text-zinc-700 drop-shadow-lg rounded-lg divide-y divide-slate-300 bg-slate-200 float-right text-right px-3 py-2 mx-8 md:mx-20 lg:mx-40">
                 <div><p class="px-2 pb-2 text-left text-sm">Hello, Dr FAULKNER</p></div>
                 <div class="py-1">
                     <a class="px-2 hover:text-black hover:bg-slate-400 rounded-md" href="#">Settings <i class="fa-solid fa-gear pl-1"></i></a><br>
+                    <a class="text-red-500 px-2 hover:text-red-700 hover:bg-slate-400 rounded-md" href="/resetALL">Reset ALL <i class="fa-solid fa-eraser pl-1"></i></a><br>
                     <a class="text-red-500 px-2 hover:text-red-700 hover:bg-slate-400 rounded-md" href="#">Sign out <i class="fa-solid fa-right-from-bracket pl-1"></i></a>
                 </div>
         </div>
         <div id="mainContent" class="px-4 md:px-20 lg:px-40">
-            <%- mainCode %>
+            <%- include(`../web/${mainCode}.html`, {data:data}) %>
         </div>
     </body>
 </html>
