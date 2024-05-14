@@ -1,35 +1,27 @@
-const express = require('express');
+const app = require('express')();
 const fs = require('fs');
-const { request } = require('http');
+const log = require('./utils/log.js');
 
-const app = express();
+app.set('view engine', 'ejs')
 
-const data = {}
-
-function updateData() {
-    fs.writeFileSync('./data.json', JSON.stringify(data));
-}
-
-app.set('view engine', 'ejs');
-
-app.get('/resetALL', (req,res) => {
-    res.write('Resetting all data...\n\n');
-    const data = JSON.parse(fs.readFileSync('./exampleData.json'));
-    fs.writeFileSync('./data.json', JSON.stringify(data));
-    res.end('Resetted successfully.');
+app.get('/cdn/*', (req, res) => {
+    res.sendFile(__dirname + "/public/" + req.url.split('/').slice(2).join('/'));
 });
 
-app.get('/*', (req,res) => {
-    if (req.url == '/') {
-        requestPath = '/index';
-    } else if (req.url == '/favicon.ico') {
-        res.sendStatus(404);
-    } else {
-        requestPath = req.url;
+app.get('/*', (req, res) => {
+    log.info(`${req.ip} GET ${req.url}`);
+    switch(req.url) {
+        case '/':
+            res.render('index.ejs', {query: req.query});
+            break;
+        case '/favicon.ico':
+            res.sendStatus(404);
+            break;
+        default:
+            res.render('/views/' + req.url.split('/')[1], {query: req.query});
     }
-    res.render(__dirname + '/web/index.ejs', {selected: requestPath.split('/')[1], mainCode: requestPath, data: data});
 });
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server started on Port ${process.env.PORT || 3000}`);
+   log.success(`Server started on port ${process.env.PORT || 3000}`);
 });
