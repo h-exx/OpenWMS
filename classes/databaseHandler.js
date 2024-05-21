@@ -1,4 +1,4 @@
-const postgres = require('postgres');
+const pg = require('pg');
 const log = require('../utils/log.js');
 
 class DatabaseHandler {
@@ -11,6 +11,14 @@ class DatabaseHandler {
             password: 'iamthepassword'
         }).catch((err) => {log.error(err)});
         const i = this.db`SELECT * FROM wards`;
+
+        this.db = new pg.Client({
+            host: '172.19.0.2',
+            port: 5432,
+            database: 'openwms',
+            
+        })
+
     }
 }
 

@@ -1,0 +1,20 @@
+<%
+ const pageName = "Wards";
+
+%>
+<!doctype html>
+<html lang="en">
+<head>
+    <%- include('../includes/header.ejs', {pageName: pageName}) %>
+</head>
+<body>
+    <%- include('../includes/navbar.ejs') %>
+    <%- include('../includes/titlebar.ejs', {title:'Wards'}) %>
+    <div class="grid grid-cols-2 defaultSpacing gap-2 my-2">
+        <a href="./ward?id=" class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50">Gold Ward</a>
+        <a class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50">Gold Ward</a>
+        <a class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50">Gold Ward</a>
+        <a class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50">Gold Ward</a>
+    </div>
+</body>
+</html>

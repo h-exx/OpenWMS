@@ -19,7 +19,8 @@ app.get('/*', (req, res) => {
             res.sendStatus(404);
             break;
         default:
-            res.render('/views/' + req.url.split('/')[1], {query: req.query});
+            let theURL = req.url.split('/').slice().join('/');
+            res.render(theURL + '.ejs', {query: req.query});
     }
 });
 
