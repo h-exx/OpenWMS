@@ -5,6 +5,7 @@ const log = require('./utils/log.js');
 app.set('view engine', 'ejs')
 
 app.get('/cdn/*', (req, res) => {
+    log.info(`${req.ip} GET ${req.url}`);
     res.sendFile(__dirname + "/public/" + req.url.split('/').slice(2).join('/'));
 });
 
