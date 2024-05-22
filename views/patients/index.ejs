@@ -5,17 +5,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <%- include('../includes/header.ejs', {pageName: pageName}) %>
+    <%- include('../../includes/header.ejs', {pageName: pageName}) %>
 </head>
 <body>
-    <%- include('../includes/navbar.ejs') %>
-    <%- include('../includes/titlebar.ejs', {title:'Patients'}) %>
+    <%- include('../../includes/navbar.ejs') %>
+    <%- include('../../includes/titlebar.ejs', {title:'Patients'}) %>
+    <%- include('../../includes/errorDisplay.ejs', {query:query}) %>
     <div class="grid grid-cols-1 md:grid-cols-2 defaultSpacing gap-2 my-2">
-        <a href="./addpatient" class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50 flex"><span class="text-xl px-1 font-bold my-auto"><i class="text-2xl fa-solid fa-circle-plus mr-1"></i> Add a Patient</span></a>
-        <a href="./patient?id=" class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50"><span class="text-xl font-bold">Mr FAULKNER, Jacques</span><br><span class="text-sm">000 000 0000</span></a>
-        <a class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50">Gold Ward</a>
-        <a class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50">Gold Ward</a>
-        <a class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50">Gold Ward</a>
+        <a href="./patients/addpatient" class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50 flex"><span class="text-xl px-1 font-bold my-auto"><i class="text-2xl fa-solid fa-circle-plus mr-1"></i> Add a Patient</span></a>
+        <% patientList.forEach(patient => { %>
+        <a href="./patient?id=<%=patient.id%>" class="bg-blue-400 hover:bg-blue-500 hover:text-white rounded-lg px-2 py-2 text-blue-50"><span class="text-xl font-bold"><%=patient.name%></span><br><span class="text-sm"><%=patient.nhsnum%></span></a>
+        <% }); %>
     </div>
 </body>
 </html>
