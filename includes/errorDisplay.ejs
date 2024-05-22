@@ -1,0 +1,14 @@
+<div class="defaultSpacing">
+    <% if (query.success == 'true') {%>
+        <p class="w-full rounded-lg py-4 px-4 text-xl text-white font-bold bg-green-600"><i class="fa-solid fa-circle-check"></i> Completed Successfully</p>
+    <% } else if (query.success == 'false') {
+        switch (query.reason) {
+            case 'MISSINGPARAMS':
+                __append('<p class="w-full rounded-lg py-4 px-4 text-xl text-white font-bold bg-red-500"><i class="fa-solid fa-circle-xmark"></i> You are missing parameters</p>');
+                break;
+            default:
+                __append('<p class="w-full rounded-lg py-4 px-4 text-xl text-white font-bold bg-red-500"><i class="fa-solid fa-circle-xmark"></i> An error occurred</p>');
+                break;
+        }
+    }%>
+</div>
