@@ -1,24 +1,30 @@
 const pg = require('pg');
 const log = require('../utils/log.js');
 
+
 class DatabaseHandler {
-    connect() {
-        this.db = postgres({
-            host: '172.19.0.2',
-            port: 5432,
-            database: 'openwms',
-            username: 'postgres',
-            password: 'iamthepassword'
-        }).catch((err) => {log.error(err)});
-        const i = this.db`SELECT * FROM wards`;
-
+    constructor() {
+        this.db = null;
+    }
+    async connect() {
         this.db = new pg.Client({
-            host: '172.19.0.2',
-            port: 5432,
-            database: 'openwms',
-            
-        })
+            host: process.env.DB_HOST,
+            port: process.env.DB_PORT,
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER,
+            password: process.env.DB_PWD
+        });
+        try {
+            await this.db.connect();
+            return this.db;
+        } catch (err) {
+            log.error(err);
+            return false;
+        }
 
+    }
+    close() {
+        this.db.end();
     }
 }
 
