@@ -17,13 +17,21 @@ class Patients extends DatabaseHandler {
         return data.rows[0];
     }
 
+    async addPatientHistory(id, text) {
+        log.info(`Adding patient history to ${id}`);
+        let oldData = await this.getPatient(id);
+        oldData.history.push({date:Date.now(), message:text});
+        this.connect();
+        await this.db.query("UPDATE patient_info SET history=$1 WHERE id=$2", [JSON.stringify(oldData.history), id]);
+        this.close();
+        return [true];
+    }
+
     async createPatient(name, nhsnum, sex, dob) {
         log.info(`Creating patient ${name}`);
         await this.connect();
-        const res = await this.db.query("INSERT INTO patient_info (name, nhsnum, sex, dob) VALUES ($1, $2, $3, $4) RETURNING id", [name, nhsnum, sex, dob]);
-        console.log(res);
+        const res = await this.db.query("INSERT INTO patient_info (name, nhsnum, sex, dob, history) VALUES ($1, $2, $3, $4, $5) RETURNING id", [name, nhsnum, sex, dob, "[]"]);
         this.close();
-        console.log(res);
         return [true, res.rows[0].id];
     }
 }
