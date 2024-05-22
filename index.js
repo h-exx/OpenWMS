@@ -50,6 +50,26 @@ app.get('/*', (req, res) => {
     }
 });
 
-app.listen(process.env.PORT || 3000, () => {
+// API
+
+app.post('/api/addPatient', async (req, res, body) => {
+    log.info(`${req.ip} POST ${req.url}`);
+    const data = req.body;
+    if (typeof data.lastName === 'undefined' || typeof data.firstName === 'undefined' || typeof data.nhsnum === 'undefined' || typeof data.sex === 'undefined' || typeof data.dob === 'undefined') {
+        res.status(400).send('Missing Parameters');
+        return;
+    }
+
+    const result = await patients.createPatient(`${data.lastName.toUpperCase()}, ${data.firstName}`, req.body.nhsnum, req.body.sex, req.body.dob);
+    if (result[0]) {
+        res.redirect('/patients?success=true');
+    } else {
+        res.redirect(`/patients?success=false&reason=${result[1]}`);
+    }
+});
+
+
+
+app.listen(process.env.PORT || 3001, () => {
    log.success(`Server started on port ${process.env.PORT || 3000}`);
 });
