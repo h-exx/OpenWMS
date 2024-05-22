@@ -1,0 +1,19 @@
+<nav class="defaultSpacing bg-blue-500 py-2 flex justify-between">
+    <div class="navItems">
+        <a href="/" class="text-blue-100 hover:text-white text-lg font-bold"><i class="text-md fa-solid fa-hospital"></i> <span class="">OpenWMS</span></a>
+        <p class="text-blue-100 text-xs italic">Open Ward Management System</p>
+    </div>
+    <div class="navItems">
+        <a href="#" onclick="toggleProfile()" class="my-4 navButton"><i class="text-md fa-solid fa-user"></i></a>
+        <%- include('../includes/profileDropdown.ejs') %>
+    </div>
+</nav>
+<nav class="defaultSpacing bg-blue-700 py-0.5 flex justify-between">
+    <span></span>
+    <div class="navItems">
+        <a href="/wards" class="secondaryNavButton"><i class="text-md fa-solid fa-bed"></i> <span class="hidden sm:inline-block">Wards</span></a>
+        <a href="/patients" class="secondaryNavButton"><i class="text-md fa-solid fa-users"></i> <span class="hidden sm:inline-block">Patients</span></a>
+        <a href="/admin" class="secondaryNavButton"><i class="fa-solid fa-hammer"></i> <span class="hidden sm:inline-block">Admin</span></a>
+    </div>
+    <span></span>
+</nav>
