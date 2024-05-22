@@ -1,0 +1,58 @@
+<%
+ const pageName = "Wards";
+
+%>
+<!doctype html>
+<html lang="en">
+<head>
+    <%- include('../../includes/header.ejs', {pageName: pageName}) %>
+</head>
+<body>
+    <%- include('../../includes/navbar.ejs') %>
+    <%- include('../../includes/titlebar.ejs', {title:`${ward.name}`}) %>
+    <%- include('../../includes/errorDisplay.ejs', {query:query}) %>
+    <div class="grid grid-cols-<%= ward.wardpos[0].length %> defaultSpacing gap-2 my-2">
+        <% ward.warddata.forEach((bed) => {
+            switch(bed.status) {
+                case 'AVAILABLE': %>
+                    <div class="w-full bg-blue-300 grid grid-cols-1 place-items-center rounded-lg px-2 py-2 h-20">
+                        <a href="#" class="text-center mx-auto font-bold text-lg">Available Bed</a>
+                        <a href="/wards/admitPatient?wardid=<%= ward.id %>&bedid=<%= bed.id %>" class="bg-blue-500 text-sm px-2 py-1 rounded-lg">Admit Patient</a>
+                    </div>
+                <% break;
+                case 'OCCUPIED': %>
+                    <div class="w-full bg-gray-300 grid grid-cols-1 place-items-center rounded-lg px-2 py-2 h-20">
+                        <a href="/patient?id=<%= bed.patient %>" class="text-center mx-auto font-bold hover:underline text-lg"><%= patients.find(item => item.id == bed.patient).name %></a>
+                        <form action="/api/dischargePatient" method="POST">
+                            <input type="hidden" name="wardid" value="<%= ward.id %>">
+                            <input type="hidden" name="bedid" value="<%= bed.id %>">
+                            <input type="submit" class="bg-blue-500 text-sm px-2 py-1 rounded-lg" value="Discharge Patient">
+                        </form>
+                    </div>
+                <% break;
+                case 'CLEANING': %>
+                <div class="w-full bg-orange-300 grid grid-cols-1 place-items-center rounded-lg px-2 py-2 h-20">
+                    <a href="/patient?id=<%= bed.patient %>" class="text-center mx-auto font-bold hover:underline text-lg">Cleaning Required</a>
+                    <form action="/api/cleanedBed" method="POST">
+                        <input type="hidden" name="wardid" value="<%= ward.id %>">
+                        <input type="hidden" name="bedid" value="<%= bed.id %>">
+                        <input type="submit" class="bg-orange-500 text-sm px-2 py-1 rounded-lg" value="Mark as Cleaned">
+                    </form>
+                </div>
+        <% }}); %>
+    </div>
+</body>
+</html>
+
+<!--
+
+{
+    id:
+    status: 'AVAILABLE',
+    patient: 7,
+    colour: 'blue'
+}
+
+{"id":0,"status":"AVAILABLE"}
+
+-->
