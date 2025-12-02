@@ -1,0 +1,1 @@
+# PLEASE NOTE THIS HAS A SECURITY VULNERABILITY IN IT. READ MORE [HERE](https://github.com/advisories/GHSA-5j98-mcp5-4vw2)
